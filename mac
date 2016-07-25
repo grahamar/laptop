@@ -109,29 +109,13 @@ brew "the_silver_searcher"
 brew "tmux"
 brew "vim"
 brew "zsh"
-
-# Heroku
-brew "heroku-toolbelt"
-brew "parity"
-
-# GitHub
-brew "hub"
-
-# Image manipulation
-brew "imagemagick"
-
-# Testing
-brew "qt"
-
 # Programming languages
-brew "libyaml" # should come after openssl
-brew "node"
+brew "jenv"
 brew "rbenv"
 brew "ruby-build"
-
-# Databases
-brew "postgres", restart_service: true
-brew "redis", restart_service: true
+brew "pyenv"
+brew "pyenv-virtualenv"
+brew "pyenv-virtualenvwrapper"
 EOF
 
 fancy_echo "Configuring Ruby ..."
@@ -141,7 +125,7 @@ find_latest_ruby() {
 
 ruby_version="$(find_latest_ruby)"
 # shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
+append_to_zshrc 'if which rbenv > /dev/null; then eval "$(rbenv init - --no-rehash)"; fi' 1
 eval "$(rbenv init -)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
@@ -154,6 +138,15 @@ gem update --system
 gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
+
+append_to_zshrc 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi' 1
+append_to_zshrc 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' 1
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+pyenv install 2.7.10
+pyenv install 3.5.1
+pyenv global 2.7.10 3.5.1
+pyenv virtualenvwrapper
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."

@@ -70,52 +70,20 @@ Unix tools:
 [Tmux]: http://tmux.github.io/
 [Zsh]: http://www.zsh.org/
 
-Heroku tools:
-
-* [Heroku Toolbelt] and [Parity] for interacting with the Heroku API
-
-[Heroku Toolbelt]: https://toolbelt.heroku.com/
-[Parity]: https://github.com/thoughtbot/parity
-
-GitHub tools:
-
-* [Hub] for interacting with the GitHub API
-
-[Hub]: http://hub.github.com/
-
-Image tools:
-
-* [ImageMagick] for cropping and resizing images
-
-Testing tools:
-
-* [Qt] for headless JavaScript testing via Capybara Webkit
-
-[Qt]: http://qt-project.org/
-
 Programming languages and configuration:
 
 * [Bundler] for managing Ruby libraries
-* [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Rbenv] for managing versions of Ruby
 * [Ruby Build] for installing Rubies
 * [Ruby] stable for writing general-purpose code
+* [jEnv] for managing Java versions
+* [pyenv] for managing versions of Python
+* [Python] 2.7 & 3.5
 
 [Bundler]: http://bundler.io/
-[ImageMagick]: http://www.imagemagick.org/
-[Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
 [Rbenv]: https://github.com/sstephenson/rbenv
 [Ruby Build]: https://github.com/sstephenson/ruby-build
 [Ruby]: https://www.ruby-lang.org/en/
-
-Databases:
-
-* [Postgres] for storing relational data
-* [Redis] for storing key-value data
-
-[Postgres]: http://www.postgresql.org/
-[Redis]: http://redis.io/
 
 It should take less than 15 minutes to install (depends on your machine).
 
