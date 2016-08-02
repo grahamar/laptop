@@ -43,6 +43,11 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch "$HOME/.zshrc"
 fi
 
+append_to_zshrc 'export ZSH=$HOME/.oh-my-zsh'
+append_to_zshrc 'ZSH_THEME="af-magic"'
+append_to_zshrc 'plugins=(git)'
+append_to_zshrc 'source $ZSH/oh-my-zsh.sh'
+
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
@@ -61,7 +66,7 @@ fi
 case "$SHELL" in
   */zsh) : ;;
   *)
-    fancy_echo "Changing your shell to zsh ..."
+fancy_echo "Changing your shell to zsh ..."
       chsh -s "$(which zsh)"
     ;;
 esac
@@ -143,10 +148,44 @@ append_to_zshrc 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi' 1
 append_to_zshrc 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' 1
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-pyenv install 2.7.10
-pyenv install 3.5.1
+pyenv install -s 2.7.10
+pyenv install -s 3.5.1
 pyenv global 2.7.10 3.5.1
 pyenv virtualenvwrapper
+
+if [ -d ~/.oh-my-zsh ]; then
+  echo "oh-my-zsh already installed, skipping..."
+else
+  git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+fi
+
+if [ -d ~/.dotfiles ]; then
+else
+  git clone git@github.com:grahamar/.dotfiles.git ~/.dotfiles
+fi
+
+rcup -v
+
+append_to_zshrc "alias gs='git status'"
+
+echo "Increasing default key repeat"
+defaults write -g InitialKeyRepeat -int 15
+defaults write -g KeyRepeat -int 1
+
+echo " Require password immediately after sleep or screen saver begins"
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+echo " Finder: show all filename extensions"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+echo " Avoid creating .DS_Store files on network volumes"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+echo " Automatically hide and show the Dock"
+defaults write com.apple.dock autohide -bool true
+
+echo "Done.  Restart computer to see all changes"
 
 if [ -f "$HOME/.laptop.local" ]; then
   fancy_echo "Running your customizations from ~/.laptop.local ..."
