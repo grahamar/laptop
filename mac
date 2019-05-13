@@ -148,9 +148,9 @@ append_to_zshrc 'if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi' 1
 append_to_zshrc 'if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi' 1
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-pyenv install -s 2.7.10
-pyenv install -s 3.5.1
-pyenv global 2.7.10 3.5.1
+CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install -s 2.7.16
+CFLAGS="-I$(xcrun --show-sdk-path)/usr/include" pyenv install -s 3.7.3
+pyenv global 2.7.16 3.7.3
 pyenv virtualenvwrapper
 
 if [ -d ~/.oh-my-zsh ]; then
